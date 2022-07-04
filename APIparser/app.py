@@ -5,14 +5,14 @@ import configparser
 import os
 
 #import parser package
-import parser.homepage_parser.py
-import parser.intranet_parser.py
+import parser.homepage_parser
+import parser.intranet_parser
 
 
 
 #set config
 config = configparser.ConfigParser()    
-config.read('..\config.ini', encoding='utf-8')
+config.read('config.ini', encoding='utf-8')
 
 port = config['APIparser_config']['port']
 
@@ -21,12 +21,10 @@ port = config['APIparser_config']['port']
 #controller
 app = Flask(__name__)
 
-api = Api(app, version='1.0', title='내부용 파서 API', description='Swagger 문서', doc="/api-docs")
+api = Api(app, version='1.0', title='내부용 파서 API', description='Swagger 문서', doc="/")
 api = api.namespace('v1')
 
-@app.route('/')
-def hello_world():
-    return 'APIparser server'
+
 
 
 @api.route('/best/<int:age>/<string:gender>',methods = ['GET','POST'])
@@ -35,7 +33,7 @@ class Best(Resource) :
         
         #get DB
         body = {}
-        body['best'] = best_menu;
+        body['best'] = 'test'
         return body
     def post(self) :
         pass
