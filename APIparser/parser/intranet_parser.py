@@ -36,5 +36,5 @@ def get_exist_user(user,password) :
 
 
 if __name__ == '__main__':
-    get_exist_user('21-3087','19980207')
+    get_exist_user('20-2337','19980207')
  
