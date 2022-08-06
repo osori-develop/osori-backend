@@ -170,7 +170,7 @@ def get_in_room(user) :
         return -1
 
 
-
+#유저의 상벌점 점수 (int )
 def get_user_point(user) :
     session = requests.session()
     url = "http://1.246.219.13:8080/webRwrPnsSearch.do"
@@ -199,9 +199,10 @@ def get_user_point(user) :
     print(res.text)
 
 
+#유저의 상벌점 목록 반환
 
 
-    
+# 유저 수리 등록 (number 01~07)
 def post_fix_info(user, number ,str) :
     session = requests.session()
     url = "http://1.246.219.13:8080/webEstaRepaReqSave.do"
@@ -246,6 +247,53 @@ def post_fix_info(user, number ,str) :
     print(res.text)
 
 
+# 유저 수 목ㅗ 반ㅏ
+
+#외박신청
+def post_user_stay_out(user, start_date, end_date, no) :
+    
+    session = requests.session()
+    url = 'http://1.246.219.13:8080/overNightStDateChk.do'
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\
+<Root xmlns="http://www.nexacroplatform.com/platform/dataset">\
+	<Parameters />\
+	<Dataset id="dsDetail">\
+		<ColumnInfo>\
+			<Column id="IDX" type="STRING" size="256" />\
+			<Column id="RESCHR_NM" type="STRING" size="256" />\
+			<Column id="SCHAFS_NO" type="STRING" size="256" />\
+			<Column id="FLOOR_ROOM_NO" type="STRING" size="256" />\
+			<Column id="STAYOUT_FR_DT" type="STRING" size="256" />\
+			<Column id="STAYOUT_TO_DT" type="STRING" size="256" />\
+			<Column id="STAYOUT_RESN" type="STRING" size="256" />\
+			<Column id="STAYOUT_RESN2" type="STRING" size="256" />\
+			<Column id="DSTN_NM" type="STRING" size="256" />\
+			<Column id="DSTN_NM2" type="STRING" size="256" />\
+			<Column id="BRHS_CODE" type="STRING" size="256" />\
+			<Column id="PREV_FO_DT" type="STRING" size="256" />\
+			<Column id="PREV_TO_DT" type="STRING" size="256" />\
+			<Column id="ORGIN_SIGUN" type="STRING" size="256" />\
+			<Column id="BB" type="STRING" size="256" />\
+		</ColumnInfo>\
+		<Rows>\
+			<Row>\
+				<Col id="IDX">7735</Col>\
+				<Col id="RESCHR_NM">김영우</Col>\
+				<Col id="SCHAFS_NO">20-2337</Col>\
+				<Col id="FLOOR_ROOM_NO">4층&#32;407호</Col>\
+				<Col id="STAYOUT_FR_DT">20220730</Col>\
+				<Col id="STAYOUT_TO_DT">20220801</Col>\
+				<Col id="BRHS_CODE">DS</Col>\
+				<Col id="ORGIN_SIGUN">3</Col>\
+				<Col id="BB">충주시</Col>\
+			</Row>\
+		</Rows>\
+	</Dataset>\
+</Root>\
+    '
+    res = session.post(url, data=xml.encode('utf-8'),headers={'Content-type': 'text/plain; charset=utf-8'})
+    print(res.text)
+
 
 if __name__ == '__main__':
 
@@ -258,4 +306,6 @@ if __name__ == '__main__':
     str = "에어컨에서물이나옵니다."
     #post_fix_info("20-2337","07",str)
     
+    post_user_stay_out('','','','')
+
     pass

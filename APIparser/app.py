@@ -1,5 +1,7 @@
 from flask      import Flask, jsonify, request
 from flask_restx import Api, Resource, reqparse, fields
+from datetime import datetime 
+import time
 
 import configparser
 import os
@@ -14,10 +16,9 @@ import parser.intranet_parser
 #set config
 config = configparser.ConfigParser()    
 config.read('config.ini', encoding='utf-8')
-
 port = config['APIparser_config']['port']
-
-
+host = config['APIparser_config']['host']
+datetime_format = "%y-%m-%d"
 
 #controller
 app = Flask(__name__)
@@ -35,7 +36,7 @@ class Best(Resource) :
 class Best(Resource) :
     def get(self, id) :
         str = intranet_parser.get_user_info(id)
-        print(str)
+        #print(str)
 
         if str == -1 :
             return -1
@@ -46,7 +47,7 @@ class Best(Resource) :
             body["floor"] = str[2]
             body["room"] = str[3]
             body["room_num"] = str[4]
-            #body["date"] = str[5]
+            body["date"] = str[5].strftime(datetime_format)
 
         
             return body
@@ -57,5 +58,5 @@ class Best(Resource) :
         return intranet_parser.get_in_room(id)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port)
+    app.run(host= host, port=port)
 
