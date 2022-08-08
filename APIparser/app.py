@@ -15,7 +15,7 @@ import parser.intranet_parser
 
 #set config
 config = configparser.ConfigParser()    
-config.read('config.ini', encoding='utf-8')
+config.read('../config.ini', encoding='utf-8')
 port = config['APIparser_config']['port']
 host = config['APIparser_config']['host']
 datetime_format = "%y-%m-%d"
