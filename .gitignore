@@ -4,3 +4,4 @@
 #config file
 *.ini
 *.pem
+*.properties
