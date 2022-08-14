@@ -29,9 +29,15 @@ public class Member {
     private Authority authority;
 
     @Builder
-    public Member(String email, String password, Authority authority) {
+    public Member(String email, String password, Authority authority,String name, int floor, int room, int room_num, String date) {
         this.email = email;
         this.password = password;
         this.authority = authority;
+
+        this.name = name;
+        this.floor = floor;
+        this.room = room;
+        this.room_num = room_num;
+        this.date = date;
     }
 }

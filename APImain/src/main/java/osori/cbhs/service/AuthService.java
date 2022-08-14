@@ -1,11 +1,9 @@
 package osori.cbhs.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-import osori.cbhs.controller.dto.MemberRequestDto;
-import osori.cbhs.controller.dto.MemberResponseDto;
-import osori.cbhs.controller.dto.TokenRequestDto;
-import osori.cbhs.controller.dto.TokenDto;
+import osori.cbhs.controller.dto.*;
 import osori.cbhs.entity.Member;
 import osori.cbhs.entity.RefreshToken;
 import osori.cbhs.jwt.TokenProvider;
@@ -18,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import osori.cbhs.util.APIserverUtil;
 
 import java.util.Collections;
 import java.util.Map;
@@ -31,23 +30,40 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+    @Autowired
+    private APIserverUtil APIserver;
 
-        //중복확인
+    @Transactional
+    public TokenDto signup(MemberRequestDto memberRequestDto) {
+//
+//        //중복확인 후 있으면 로그인 하기
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
+            return login(memberRequestDto);
         }
 
-        Member member = memberRequestDto.toMember(passwordEncoder);
-
         //학사생이 맞는지 확인
+        boolean existcbhs = APIserver.Getexist(memberRequestDto.getEmail(),memberRequestDto.getPassword());
+
+        if (existcbhs) {
+            System.out.println("가입시작");
+            MemberInfoDto info = APIserver.GetInfo(memberRequestDto.getEmail());
+
+            Member member = memberRequestDto.toMember(passwordEncoder,info);
+            MemberResponseDto.of(memberRepository.save(member));
+            return login(memberRequestDto);
+
+        }
+
+        else {
+            return login(memberRequestDto);
+        }
 
 
 
 
 
-        return MemberResponseDto.of(memberRepository.save(member));
+
+
     }
 
     @Transactional

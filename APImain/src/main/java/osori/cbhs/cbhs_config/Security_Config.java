@@ -40,6 +40,7 @@ public class Security_Config extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
 
             "/auth/**",
+            "/menu/**",
             "/test/**"
     };
 

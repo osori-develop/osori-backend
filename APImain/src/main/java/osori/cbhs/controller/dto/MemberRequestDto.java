@@ -14,11 +14,16 @@ public class MemberRequestDto {
     private String email;
     private String password;
 
-    public Member toMember(PasswordEncoder passwordEncoder) {
+    public Member toMember(PasswordEncoder passwordEncoder, MemberInfoDto infoDto) {
         return Member.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)
+                .name(infoDto.getName())
+                .floor(infoDto.getFloor())
+                .room(infoDto.getRoom())
+                .room_num(infoDto.getRoom_num())
+                .date(infoDto.getDate())
                 .build();
     }
 
