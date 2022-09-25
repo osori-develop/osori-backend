@@ -3,10 +3,7 @@ package osori.cbhs.entity;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,16 +12,18 @@ import java.util.Date;
 public class Cbhs2_menu {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private  Long id;
-
 
     @Column(name = "day")
     private Date day;
 
-
     @Column(name = "bld")
-    private String bld;
+    private int bld;
+
+    @Column(name = "menu")
+    private String menu;
 
     @Column(name = "best")
     @ColumnDefault("0")

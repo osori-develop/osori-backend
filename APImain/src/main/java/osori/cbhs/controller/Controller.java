@@ -40,7 +40,7 @@ public class Controller {
     @GetMapping("/test/")
     public ResponseEntity<String> main_page (@Parameter(description = "jwt", required = true, example = "Park") @RequestParam String jwt) {
 
-        server.GetInfo("20-2337");
+
 
         return ResponseEntity.ok("dd");
     }

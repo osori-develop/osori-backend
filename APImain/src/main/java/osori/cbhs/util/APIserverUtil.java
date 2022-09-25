@@ -62,8 +62,6 @@ public class APIserverUtil {
 
         String get_url = "http://" + url + ":" + port + "/v1/info/" + id  ;
 
-
-
         List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<MemberInfoDto> result = restTemplate.getForEntity(get_url,MemberInfoDto.class);

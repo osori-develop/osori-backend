@@ -41,7 +41,10 @@ public class Security_Config extends WebSecurityConfigurerAdapter {
 
             "/auth/**",
             "/menu/**",
-            "/test/**"
+            "/test/**",
+
+
+            "/member/**"
     };
 
     @Override
